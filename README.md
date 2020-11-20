@@ -8,7 +8,6 @@ It is growing beyond its original purpose and now supports executing frequent co
 
 This is a work in progress so it may have breaking changes in each update until it is stable.
 
-
 There will be better documentation in the future when this module hits a stable release.
 
 Quick Start
@@ -60,7 +59,7 @@ or with the alias
 ```powershell
 ql !pro
 ```
-This will cause Set-QuickLocation to attempt opening your Powershell profile by using the Windows file extension association (in this case ".ps1"). If there is no association it will ask you which application you want to use to open it.
+This will remove the alias "pro" from your location list.
 
 5. Copy location to clipboard
   

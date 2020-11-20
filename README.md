@@ -87,7 +87,7 @@ This will add "Joe User" to the quick location list which can then be place on t
 qlc name
 ```
 
-6. You can store shortcuts to frequently used commands by adding a '*' prefix to your alias.
+6. You can store shortcuts to frequently used powershell commands by adding a '*' prefix to your alias.  You can put anything that Powershell understands when using the built in Invoke-Expression command.
 
 For example
 

@@ -32,7 +32,31 @@ ql doc "$($env:USERPROFILE)\Documents"
 ql doc
 ```
 
+To see your current quick locations use `Show-QuickLocation` or the alias `qll`.
+
 The command has Tab-Completion so if you have many location aliases set you can start typing and hit the tab key to cycle through the available names.
+
+You can save your current quick locations and restore them by adding some code to your Powershell profile.
+
+I don't want the module to be responsible for deciding how and where you store your data so I am leaving it to the user.  Here is an example of you you might implement that for yourself.
+
+In your powershell profile you can add the following.
+
+```powershell
+Import-Module WieldingLocation
+
+function Save-QuickLocations {
+  Set-Content -Path "$($env:USERPROFILE)\.config\WieldingLocation\locations.json" (ConvertTo-Json -InputObject $QuickLocation)
+}
+
+if (Test-Path -Path "$($env:USERPROFILE)\.config\WieldingLocation\locations.json") {
+  $QuickLocation = (Get-Content -Path "$($env:USERPROFILE)\.config\WieldingLocation\locations.json" | ConvertFrom-Json -AsHashtable)
+}
+
+```
+
+This will load your saved locations when you start an new Powershell session and gives you a function `Save-QuickLocations` that you can manually call if you want to save your current quick location data.  This way you are in control and can even load different quick locations for different situations. 
+
 
 Examples
 ========

@@ -99,7 +99,7 @@ Import-Module WieldingLocation
 $quickConfigLocation = "$($env:USERPROFILE)\.config\WieldingLocation\locations.json"
 
 function Save-QuickLocations {
-  Set-Content -Path $quickConfigLocation (ConvertTo-Json -InputObject $QuickLocation -Depth 10)
+  Set-Content -Path $quickConfigLocation (ConvertTo-Json -InputObject $QuickLocation)
 }
 
 if (Test-Path -Path $quickConfigLocation) {

@@ -12,7 +12,7 @@
 RootModule = 'WieldingLocation.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.7'
+ModuleVersion = '0.0.8'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -107,7 +107,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'Added ability to execute stored location data'
+        ReleaseNotes = 'changed execute prefix to ''*'''
 
         # Prerelease string of this module
         Prerelease = 'Alpha'

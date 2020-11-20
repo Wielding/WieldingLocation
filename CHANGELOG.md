@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 0.0.8-Alpha - 2020-11-20
+#### Changes
+- changed execute prefix to '*'
+
 ### 0.0.7-Alpha - 2020-11-20
 #### Changes
 - Added ability to execute stored location data

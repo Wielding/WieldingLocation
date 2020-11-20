@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 0.0.6-Alpha - 2020-11-20
+#### Changes
+- Added Copy-QuickLocation
+
 ### 0.0.5-Alpha - 2020-11-20
 #### Changes
 - Added Copy-QuickLocation

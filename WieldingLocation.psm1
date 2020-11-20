@@ -76,23 +76,36 @@ function Set-QuickLocation {
     if ($hasAlias) {
         if (!$hasLocation) {
             if ($QuickLocation.Locations.Contains($Alias)) {
-                $QuickLocation.LastLocation = $PWD
-                $resolvedLocation = (Split-Path -Resolve $QuickLocation.Locations[$Alias]) + "/" + (Split-Path -Leaf $QuickLocation.Locations[$Alias])
-                $item = Get-ItemProperty $resolvedLocation
-
+                $item = Get-ItemProperty $QuickLocation.Locations[$Alias]
                 if (Test-IsDirectory $item) {
-                    Set-Location -Path $QuickLocation.Locations[$Alias]
-                } else {
-                    Invoke-Item $QuickLocation.Locations[$Alias]
+                    $QuickLocation.LastLocation = $PWD
+                    Set-Location -Path $item.FullName
+                }
+                else {
+                    Invoke-Item $item.FullName
                 }
                 return
-            } else {
-                Write-Host "Location name [$Alias] does not exist"
+            }
+            else {
+                Write-Error "Location name [$Alias] does not exist"
                 return
             }
-        } else {
-            $resolvedLocation = (Split-Path -Resolve $Location) + "/" + (Split-Path -Leaf $Location)
-            $QuickLocation.Locations[$Alias] = $resolvedLocation
+        }
+        else {
+            if (Test-Path $Location) {
+                try {
+                    $item = Get-ItemProperty $Location
+                }
+                catch {
+                    Write-Error "Error accessing location [$item]"
+                    return
+                }
+            }
+            else {
+                Write-Error "Unknown location [$Location]"
+                return
+            }
+            $QuickLocation.Locations[$Alias] = $item.FullName
         }
     }
 }
@@ -104,7 +117,7 @@ function Show-QuickLocation {
 $locationCompleter = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
 
-    $QuickLocation.Locations.Keys | Sort-Object | ForEach-Object -Process {if ($_.StartsWith($wordToComplete)) {$_}}
+    $QuickLocation.Locations.Keys | Sort-Object | ForEach-Object -Process { if ($_.StartsWith($wordToComplete)) { $_ } }
 }
 
 Set-Alias -Name "ql" -Value Set-QuickLocation

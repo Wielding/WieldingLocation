@@ -5,6 +5,23 @@ class QLocationData {
 
 $QuickLocation = New-Object -TypeName QLocationData
 
+function Test-IsDirectory {
+    param (
+        $item
+    )
+
+    foreach ($attribute in $item.Attributes) {
+        $isReparsePoint = ($attribute -band [System.IO.FileAttributes]::ReparsePoint) -eq [System.IO.FileAttributes]::ReparsePoint
+        $isDirectory = ($attribute -band [System.IO.FileAttributes]::Directory) -eq [System.IO.FileAttributes]::Directory
+
+        if ($isReparsePoint -or $isDirectory) {
+            return $True
+        }
+    }
+
+    return $False
+}
+
 function Set-QuickLocation {
     <#
  .SYNOPSIS
@@ -60,7 +77,14 @@ function Set-QuickLocation {
         if (!$hasLocation) {
             if ($QuickLocation.Locations.Contains($Alias)) {
                 $QuickLocation.LastLocation = $PWD
-                Set-Location -Path $QuickLocation.Locations[$Alias]
+                $resolvedLocation = (Split-Path -Resolve $QuickLocation.Locations[$Alias]) + "/" + (Split-Path -Leaf $QuickLocation.Locations[$Alias])
+                $item = Get-ItemProperty $resolvedLocation
+
+                if (Test-IsDirectory $item) {
+                    Set-Location -Path $QuickLocation.Locations[$Alias]
+                } else {
+                    Invoke-Item $QuickLocation.Locations[$Alias]
+                }
                 return
             } else {
                 Write-Host "Location name [$Alias] does not exist"

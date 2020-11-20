@@ -2,9 +2,11 @@
 
 Powershell Quick Locations.
 
-This module adds functions to assist with navigating to common directories quickly with autocompletion.
+This module adds functions to assist with navigating to common directories and files quickly with autocompletion.
 
 This is a work in progress so it may have breaking changes in each update until it is stable.
+
+There will be better documentation in the future when this module hits a stable release.
 
 Quick Start
 -----------
@@ -32,6 +34,19 @@ ql doc "$($env:USERPROFILE)\Documents"
 ql doc
 ```
 
+4. Set a frequently used file to an alias
+
+```powershell
+Set-QuickLocation -Alias "pro" -Location $profile
+```
+
+Now when you type
+```powershell
+ql pro
+```
+
+This will cause Set-QuickLocation to attempt opening your Powershell profile by using the Windows file extension association (in this case ".ps1"). If there is no association it will ask you which application you want to use to open it.
+
 To see your current quick locations use `Show-QuickLocation` or the alias `qll`.
 
 The command has Tab-Completion so if you have many location aliases set you can start typing and hit the tab key to cycle through the available names.
@@ -46,7 +61,7 @@ In your powershell profile you can add the following.
 Import-Module WieldingLocation
 
 function Save-QuickLocations {
-  Set-Content -Path "$($env:USERPROFILE)\.config\WieldingLocation\locations.json" (ConvertTo-Json -InputObject $QuickLocation)
+  Set-Content -Path "$($env:USERPROFILE)\.config\WieldingLocation\locations.json" (ConvertTo-Json -InputObject $QuickLocation -Depth 5)
 }
 
 if (Test-Path -Path "$($env:USERPROFILE)\.config\WieldingLocation\locations.json") {

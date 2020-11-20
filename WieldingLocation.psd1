@@ -12,7 +12,7 @@
 RootModule = 'WieldingLocation.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.3'
+ModuleVersion = '0.0.4'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -107,7 +107,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'fixed location detection and added some error handling'
+        ReleaseNotes = 'added ability to remove alias'
 
         # Prerelease string of this module
         Prerelease = 'Alpha'

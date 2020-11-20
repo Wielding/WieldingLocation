@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 0.0.4-Alpha - 2020-11-20
+#### Changes
+- added ability to remove alias
+
 ### 0.0.3-Alpha - 2020-11-20
 #### Changes
 - fixed location detection and added some error handling

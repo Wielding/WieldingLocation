@@ -74,6 +74,11 @@ function Set-QuickLocation {
     }
 
     if ($hasAlias) {
+        if ($Alias.StartsWith("!")) {
+            $QuickLocation.Locations.Remove($Alias.Substring(1))
+            Write-Host "Removed [$Alias]"
+            return
+        }
         if (!$hasLocation) {
             if ($QuickLocation.Locations.Contains($Alias)) {
                 $item = Get-ItemProperty $QuickLocation.Locations[$Alias]

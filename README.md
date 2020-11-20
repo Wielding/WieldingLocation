@@ -37,7 +37,7 @@ ql doc
 4. Set a frequently used file to an alias
 
 ```powershell
-Set-QuickLocation -Alias "pro" -Location $profile
+Set-QuickLocation -Alias pro -Location $profile
 ```
 
 Now when you type
@@ -45,6 +45,15 @@ Now when you type
 ql pro
 ```
 
+If you want to remove a location prefix the name with a "!"
+```powershell
+Set-QuickLocation -Alias !pro
+```
+
+or with the alias
+```powershell
+ql !pro
+```
 This will cause Set-QuickLocation to attempt opening your Powershell profile by using the Windows file extension association (in this case ".ps1"). If there is no association it will ask you which application you want to use to open it.
 
 To see your current quick locations use `Show-QuickLocation` or the alias `qll`.

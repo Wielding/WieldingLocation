@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 0.0.7-Alpha - 2020-11-20
+#### Changes
+- Added ability to execute stored location data
+
 ### 0.0.6-Alpha - 2020-11-20
 #### Changes
 - Added Copy-QuickLocation

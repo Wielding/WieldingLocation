@@ -78,24 +78,27 @@ function Set-QuickLocation {
         return
     }
 
-    if ($hasAlias) {
-        if ($Alias.StartsWith("!")) {
-            $QuickLocation.Locations.Remove($Alias.Substring(1))
-            Write-Host "Removed [$Alias]"
-            return
-        }
-
-        if ($Alias.StartsWith("^")) {
-            if (!$QuickLocation.Locations.Contains($Alias)) {
-                Write-Error "Unknown location [$Location]"
-                return        
-            }            
-
-            . pwsh -Command $QuickLocation.Locations[$Alias]
-        }
-    }
-
     if (!$hasLocation) {
+
+        if ($hasAlias) {
+            if ($Alias.StartsWith("!")) {
+                $QuickLocation.Locations.Remove($Alias.Substring(1))
+                Write-Host "Removed [$($Alias.Substring(1))]"
+                return
+            }
+    
+            if ($Alias.StartsWith("~")) {
+                if (!$QuickLocation.Locations.Contains($Alias)) {
+                    Write-Error "Unknown location [$Location]"
+                    return        
+                }            
+    
+                Invoke-Expression "$($QuickLocation.Locations[$Alias])"
+                return
+            }   
+        }
+   
+
         if ($QuickLocation.Locations.Contains($Alias)) {
             $item = Get-ItemProperty $QuickLocation.Locations[$Alias]
             if (Test-IsDirectory $item) {

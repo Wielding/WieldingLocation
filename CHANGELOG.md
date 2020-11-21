@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 0.0.12-Alpha - 2020-11-21
+#### Changes
+- better errors and refactoring
+
 ### 0.0.11 - 2020-11-21
 #### Changes
 - changed execute prefix back to '~'

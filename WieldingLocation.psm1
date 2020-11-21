@@ -70,7 +70,6 @@ function Set-QuickLocation {
     $hasAlias = ($Alias -ne "")
     $hasLocation = ($Location -ne "")
 
-
     if (!$hasAlias -and !$hasLocation) {
         $newLocation = $QuickLocation.LastLocation
         $QuickLocation.LastLocation = $PWD
@@ -79,8 +78,12 @@ function Set-QuickLocation {
     }
 
     if (!$hasLocation) {
-
         if ($hasAlias) {
+            if (!$QuickLocation.Locations.Contains($Alias)) {
+                Write-Error "Unknown alias [$Alias]"
+                return        
+            }            
+
             if ($Alias.StartsWith("!")) {
                 $QuickLocation.Locations.Remove($Alias.Substring(1))
                 Write-Host "Removed [$($Alias.Substring(1))]"
@@ -88,19 +91,12 @@ function Set-QuickLocation {
             }
     
             if ($Alias.StartsWith("~")) {
-                if (!$QuickLocation.Locations.Contains($Alias)) {
-                    Write-Error "Unknown location [$Location]"
-                    return        
-                }            
-    
                 Invoke-Command -ScriptBlock ([scriptblock]::create($QuickLocation.Locations[$Alias]))
                 return
             }   
-        }
    
-
-        if ($QuickLocation.Locations.Contains($Alias)) {
             $item = Get-ItemProperty $QuickLocation.Locations[$Alias]
+
             if (Test-IsDirectory $item) {
                 $QuickLocation.LastLocation = $PWD
                 Set-Location -Path $item.FullName
@@ -108,36 +104,31 @@ function Set-QuickLocation {
             else {
                 Invoke-Item $item.FullName
             }
-            return
         }
-        else {
-            Write-Error "Location name [$Alias] does not exist"
-            return
-        }
-    }
-    else {
-        $value = $Location
 
-        if (-not $Force) {
-            if (Test-Path $Location) {
-                try {
-                    $item = Get-ItemProperty $Location
-                    $value = $item.FullName
-                }
-                catch {
-                    Write-Error "Error accessing location [$item]"
-                    return
-                }
+        return
+    }
+
+    $value = $Location
+
+    if (-not $Force) {
+        if (Test-Path $Location) {
+            try {
+                $item = Get-ItemProperty $Location
+                $value = $item.FullName
             }
-            else {
-                Write-Error "Unknown location [$Location]"
+            catch {
+                Write-Error "Error accessing location [$item]"
                 return
             }
         }
-
-        $QuickLocation.Locations[$Alias] = $value
+        else {
+            Write-Error "Unknown location [$Location]"
+            return
+        }
     }
 
+    $QuickLocation.Locations[$Alias] = $value
 }
 
 function Show-QuickLocation {

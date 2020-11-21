@@ -87,7 +87,7 @@ function Set-QuickLocation {
                 return
             }
     
-            if ($Alias.StartsWith("*")) {
+            if ($Alias.StartsWith("~")) {
                 if (!$QuickLocation.Locations.Contains($Alias)) {
                     Write-Error "Unknown location [$Location]"
                     return        

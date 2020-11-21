@@ -87,19 +87,19 @@ This will add "Joe User" to the quick location list which can then be place on t
 qlc name
 ```
 
-6. You can store shortcuts to frequently used powershell commands by adding a '*' prefix to your alias.  You can put anything that Powershell understands when using the Invoke-Command script block.
+6. You can store shortcuts to frequently used powershell commands by adding a '[' prefix to your alias.  You can put anything that Powershell understands when using the Invoke-Command script block.
 
 For example
 
 ```powershell
-ql *wh "Write-Host 'test'" -Force
+ql ~wh "Write-Host 'test'" -Force
 ```
 
-This will store an alias named "*wh" with the value `"Write-Host 'test'" `.
+This will store an alias named "[wh" with the value `"Write-Host 'test'" `.
 
 You can now execute that command with 
 ```powershell
-ql *wh
+ql ~wh
 ```
 
 To see your current quick locations use `Show-QuickLocation` or the alias `qll`.
@@ -111,7 +111,7 @@ Name                           Value
 ----                           -----
 doc                            C:\Users\<user name>\Documents
 name                           Joe User
-*wh                            Write-Host 'test'
+~wh                            Write-Host 'test'
 ```
 
 The command has Tab-Completion so if you have many location aliases set you can start typing and hit the tab key to cycle through the available names.
@@ -152,6 +152,6 @@ ql # toggle again
 qll # lists all of the folder definitions
 qlc doc # copy the location referenced by 'doc' to the clipboard
 ql !doc # remove the doc alias from your locations
-ql *env "Get-ChildItem env:" -Force # create a quick command
-ql *env # executes the '*env' alias which will show your environment variables
+ql ~[env "Get-ChildItem env:" -Force # create a quick command
+ql ~env # executes the '~env' alias which will show your environment variables
 

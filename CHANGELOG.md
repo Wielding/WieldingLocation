@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 0.0.11 - 2020-11-21
+#### Changes
+- changed execute prefix back to '~'
+
 ### 0.0.10-Alpha - 2020-11-20
 #### Changes
 - changed to Invoke-Command

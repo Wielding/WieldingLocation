@@ -12,7 +12,7 @@
 RootModule = 'WieldingLocation.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.0.12'
+ModuleVersion = '0.0.13'
 
 # Supported PSEditions
 # CompatiblePSEditions = @()
@@ -107,7 +107,7 @@ PrivateData = @{
         # IconUri = ''
 
         # ReleaseNotes of this module
-        ReleaseNotes = 'better errors and refactoring'
+        ReleaseNotes = 'moved to write-output and updated docs'
 
         # Prerelease string of this module
         Prerelease = 'Alpha'

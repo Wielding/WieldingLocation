@@ -30,6 +30,8 @@ or using the short form with the exported alias `ql`
 ql doc "$($env:USERPROFILE)\Documents"
 ```
 
+NOTE:  Alias values are case sensitive when it comes to tab autocompletion.  It would be best if alias names where kept to lower case for ease of use.  I thought I had a fix for that but so far it does not seem to work.
+
 3. Now that you have added a location you can jump to your documents folder from wherever you are in your filesystem by simply typing the name of the alias after the `ql` alias.  The command will use tab completion with the names from your saved locations 
 
 ```powershell

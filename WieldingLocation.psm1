@@ -79,21 +79,34 @@ function Set-QuickLocation {
 
     if (!$hasLocation) {
         if ($hasAlias) {
-            if (!$QuickLocation.Locations.Contains($Alias)) {
-                Write-Error "Unknown alias [$Alias]"
-                return        
-            }            
 
             if ($Alias.StartsWith("!")) {
+                if (!$QuickLocation.Locations.Contains($Alias.Substring(1))) {
+                    Write-Output "Unknown alias [$Alias]`n"
+                    return        
+                }            
+                
                 $QuickLocation.Locations.Remove($Alias.Substring(1))
-                Write-Host "Removed [$($Alias.Substring(1))]"
+                Write-Output "Removed [$($Alias.Substring(1))]`n"
                 return
             }
     
             if ($Alias.StartsWith("~")) {
+
+                if (!$QuickLocation.Locations.Contains($Alias)) {
+                    Write-Output "Unknown alias [$Alias]`n"
+                    return        
+                }            
+    
                 Invoke-Command -ScriptBlock ([scriptblock]::create($QuickLocation.Locations[$Alias]))
                 return
             }   
+
+            if (!$QuickLocation.Locations.Contains($Alias)) {
+                Write-Output "Unknown alias [$Alias]`n"
+                return        
+            }            
+
    
             $item = Get-ItemProperty $QuickLocation.Locations[$Alias]
 
@@ -118,12 +131,12 @@ function Set-QuickLocation {
                 $value = $item.FullName
             }
             catch {
-                Write-Error "Error accessing location [$item]"
+                Write-Output "Error accessing location [$item]`n"
                 return
             }
         }
         else {
-            Write-Error "Unknown location [$Location]"
+            Write-Output "Unknown location [$Location]`n"
             return
         }
     }
@@ -145,7 +158,7 @@ function Copy-QuickLocation {
         return
     }
     else {
-        Write-Error "Unknown location [$Location]"
+        Write-Output "Unknown location [$Location]`n"
         return        
     }
 }
@@ -153,7 +166,7 @@ function Copy-QuickLocation {
 $locationCompleter = {
     param($commandName, $parameterName, $wordToComplete, $commandAst, $fakeBoundParameters)
 
-    $QuickLocation.Locations.Keys | Sort-Object | ForEach-Object -Process { if ($_.StartsWith($wordToComplete)) { $_ } }
+    $QuickLocation.Locations.Keys | Sort-Object | ForEach-Object -Process { if ($_.ToUpper().StartsWith($wordToComplete.ToUpper())) { $_ } }
 }
 
 Set-Alias -Name "ql" -Value Set-QuickLocation

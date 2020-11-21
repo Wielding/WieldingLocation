@@ -93,7 +93,7 @@ function Set-QuickLocation {
                     return        
                 }            
     
-                Invoke-Expression "$($QuickLocation.Locations[$Alias])"
+                Invoke-Command -ScriptBlock ([scriptblock]::create($QuickLocation.Locations[$Alias]))
                 return
             }   
         }

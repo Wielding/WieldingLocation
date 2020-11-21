@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 0.0.9-Alpha - 2020-11-20
+#### Changes
+- added sort to Show-QuickLocation
+
 ### 0.0.8-Alpha - 2020-11-20
 #### Changes
 - changed execute prefix to '*'

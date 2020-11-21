@@ -141,7 +141,7 @@ function Set-QuickLocation {
 }
 
 function Show-QuickLocation {
-    $QuickLocation.Locations
+    $QuickLocation.Locations.GetEnumerator() | Sort-Object -Property name
 }
 
 function Copy-QuickLocation {

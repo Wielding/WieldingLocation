@@ -2,13 +2,9 @@
 
 Powershell Quick Locations.
 
-This module adds functions to assist with navigating to common directories and files quickly with autocompletion.
+This module adds functions to assist with navigating to common directories and files quickly with autocompletion. 
 
-It is growing beyond its original purpose and now supports executing frequent commands and copying stored locations and commands to the clipboard.
-
-This is a work in progress so it may have breaking changes in each update until it is stable.
-
-There will be better documentation in the future when this module hits a stable release.
+It is growing beyond its original purpose and now supports executing frequent commands and copying stored locations and commands to the clipboard.  The clipboard functionality only works with Windows hosts at the moment.
 
 Quick Start
 -----------
@@ -21,18 +17,16 @@ Install-Module -Name WieldingLocation
 2. Set a frequently used location
 
 ```powershell
-Set-QuickLocation -Alias "doc" -Location "$($env:USERPROFILE)\Documents"
+Set-QuickLocation -Alias "doc" -Location "~\Documents"
 ```
 
 or using the short form with the exported alias `ql`
 
 ```powershell
-ql doc "$($env:USERPROFILE)\Documents"
+ql doc "~\Documents"
 ```
 
-NOTE:  Alias values are case sensitive when it comes to tab autocompletion.  It would be best if alias names where kept to lower case for ease of use.  I thought I had a fix for that but so far it does not seem to work.
-
-3. Now that you have added a location you can jump to your documents folder from wherever you are in your filesystem by simply typing the name of the alias after the `ql` alias.  The command will use tab completion with the names from your saved locations 
+3. Now that you have added a location you can jump to your documents folder from wherever you are in your filesystem by simply typing the name of the alias after the `ql` alias.  The command implements tab completion with the names from your saved locations to make navigating even faster.
 
 ```powershell
 ql doc
@@ -65,7 +59,7 @@ This will remove the alias "pro" from your location list.
 
 5. Copy location to clipboard
   
-You can also have your quick location entries copied to the clipboard.
+You can also have your quick location entries copied to the clipboard (Windows only).
 
 ```powershell
 Copy-QuickLocation pro
@@ -76,7 +70,7 @@ or with the alias
 qlc pro
 ```
 
-This will put the contents of the 'pro' alias to the clipboard on Windows.  It does not work under WSL.  I will investigate checking for linux and maybe using `xclip` to implement this functionality under an X11 environment.
+This will put the contents of the 'pro' alias to the clipboard on Windows.  I will investigate checking for linux and maybe using `xclip` to implement this functionality under an X11 environment.
 
 You can store arbitrary data in the location list by using the `-Force` option.  This will prevent validating that the data is a location on your file system.
 
@@ -89,7 +83,7 @@ This will add "Joe User" to the quick location list which can then be place on t
 qlc name
 ```
 
-6. You can store shortcuts to frequently used powershell commands by adding a '[' prefix to your alias.  You can put anything that Powershell understands when using the Invoke-Command script block.
+6. You can store shortcuts to frequently used powershell commands by adding a '~' prefix to your alias.  You can put anything that Powershell understands when using the Invoke-Command script block.
 
 For example
 
@@ -120,17 +114,17 @@ The command has Tab-Completion so if you have many location aliases set you can 
 
 You can save your current quick locations and restore them by adding some code to your Powershell profile.
 
-I don't want the module to be responsible for deciding how and where you store your data so I am leaving it to the user.  Here is an example of how you might implement that for yourself under Windows.  For other systems you probably want change the `$env:USERPROFILE` to `~` or something else.
+I don't want the module to be responsible for deciding how and where you store your data so I am leaving it to the user.  Here is an example of how you might implement that for yourself under Windows.  
 
 In your powershell profile you can add the following.
 
 ```powershell
 Import-Module WieldingLocation
 
-$quickConfigLocation = "$($env:USERPROFILE)\.config\WieldingLocation\locations.json"
+$quickConfigLocation = "~\.config\WieldingLocation\locations.json"
 
 function Save-QuickLocations {
-  Set-Content -Path $quickConfigLocation (ConvertTo-Json -InputObject $QuickLocation)
+  Set-Content -Path $quickConfigLocation (ConvertTo-Json -InputObject $QuickLocation -Depth 10)
 }
 
 if (Test-Path -Path $quickConfigLocation) {
@@ -146,7 +140,7 @@ Examples
 ========
 
 ```powershell
-ql doc "$($env:USERPROFILE)\Documents" # set the name doc to point to your documents folder (Windows)
+ql doc "~\Documents" # set the name doc to point to your documents folder (Windows)
 ql doc # change to your documents folder
 ql # change to the previous folder you were in
 ql # toggle back to the documents folder.
@@ -154,6 +148,6 @@ ql # toggle again
 qll # lists all of the folder definitions
 qlc doc # copy the location referenced by 'doc' to the clipboard
 ql !doc # remove the doc alias from your locations
-ql ~[env "Get-ChildItem env:" -Force # create a quick command
+ql ~env "Get-ChildItem env:" -Force # create a quick command to show your enviroment variables
 ql ~env # executes the '~env' alias which will show your environment variables
 

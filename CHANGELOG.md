@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 1.0.0 - 2020-12-1
+#### Changes
+- initial stable version
+
 ### 0.0.13-Alpha - 2020-11-21
 #### Changes
 - moved to write-output and updated docs

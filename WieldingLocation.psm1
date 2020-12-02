@@ -72,7 +72,7 @@ function Set-QuickLocation {
 
     if (!$hasAlias -and !$hasLocation) {
         $newLocation = $QuickLocation.LastLocation
-        $QuickLocation.LastLocation = $PWD
+        $QuickLocation.LastLocation = (Get-Location).Path
         Set-Location -Path $newLocation
         return
     }
@@ -111,7 +111,7 @@ function Set-QuickLocation {
             $item = Get-ItemProperty $QuickLocation.Locations[$Alias]
 
             if (Test-IsDirectory $item) {
-                $QuickLocation.LastLocation = $PWD
+                $QuickLocation.LastLocation = (Get-Location).Path
                 Set-Location -Path $item.FullName
             }
             else {

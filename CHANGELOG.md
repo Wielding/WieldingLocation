@@ -3,6 +3,10 @@ Change Log
 
 ## **Latest**
 
+### 1.0.1 - 2020-12-1
+#### Changes
+- fixed saving of lastlocation
+
 ### 1.0.0 - 2020-12-1
 #### Changes
 - initial stable version
